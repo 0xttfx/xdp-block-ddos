@@ -35,7 +35,7 @@ struct {
  *   - A lógica foi mantida mínima, sem operações adicionais, para otimizar o tempo de execução.
  */
 SEC("xdp")
-int xdp_ddos_blocker(struct xdp_md *ctx)
+int xdp_block_dos(struct xdp_md *ctx)
 {
     // Obtém os ponteiros para os dados do pacote
     void *data = (void *)(long)ctx->data;

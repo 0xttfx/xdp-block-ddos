@@ -28,7 +28,7 @@ O programa atua interceptando cada pacote recebido, realizando uma série de ver
 Para compilar o programa, execute:
 
 ```bash
-make
+make all
 ```
 
 ## Testes
