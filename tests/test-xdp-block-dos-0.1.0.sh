@@ -29,7 +29,7 @@ echo "Programa XDP carregado e fixado em: $PIN_PATH"
 
 echo "=== Teste: Verificando se o programa está carregado ==="
 # Verifica se o programa aparece na listagem de programas carregados
-if sudo bpftool prog show | grep -q xdp-block-dos; then
+if sudo bpftool prog show | grep -q xdp_block_dos; then
     echo "Programa XDP identificado nos programas carregados."
 else
     echo "Erro: Programa XDP não encontrado na listagem."
