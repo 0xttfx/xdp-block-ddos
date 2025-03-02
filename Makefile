@@ -14,9 +14,9 @@ REQ_CLANG_MAJOR = 10
 BPF_CFLAGS = -O2 -g -target bpf -c -Wall -Werror
 
 # Arquivos fonte e objeto
-SRC = $(wildcard src/xdp-block-ddos*.c)
-TEST_SCRIPT = $(wildcard tests/test-xdp-block-ddos*.sh)
-OBJ = xdp-block-ddos.o
+SRC = $(wildcard src/xdp-block-dos*.c)
+TEST_SCRIPT = $(wildcard tests/test-xdp-block-dos*.sh)
+OBJ = xdp-block-dos.o
 
 .PHONY: all clean test
 
