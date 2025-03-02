@@ -15,9 +15,22 @@ BPF_CFLAGS = -O2 -g -target bpf -c -Wall -Werror
 
 # Arquivos fonte e objeto
 SRC = $(wildcard src/xdp-block-ddos*.c)
+TEST_SCRIPT = $(wildcard tests/test-xdp-block-ddos*.sh)
 OBJ = xdp-block-ddos.o
 
 .PHONY: all clean test
+
+check_single_source:
+	@if [ $$(echo $(SRC) | wc -w) -ne 1 ]; then \
+		echo "Error: Found multiple or no source files matching pattern"; \
+		echo "Files found: $(SRC)"; \
+		exit 1; \
+	fi
+	@if [ $$(echo $(TEST_SCRIPT) | wc -w) -ne 1 ]; then \
+		echo "Error: Found multiple or no test script matching pattern"; \
+		echo "Files found: $(TEST_SCRIPT)"; \
+		exit 1; \
+	fi
 
 # Verifica requisitos antes de compilar
 all: check_requirements check_single_source $(OBJ)
@@ -28,13 +41,6 @@ check_requirements:
 		exit 1; \
 	fi
 	@which $(BPFTOOL) > /dev/null || (echo "Error: bpftool not found"; exit 1)
-
-check_single_source:
-	@if [ $$(echo $(SRC) | wc -w) -ne 1 ]; then \
-		echo "Error: Found multiple or no source files matching pattern"; \
-		echo "Files found: $(SRC)"; \
-		exit 1; \
-	fi
 
 $(OBJ): $(SRC)
 	$(CLANG) $(BPF_CFLAGS) $< -o $@
@@ -47,8 +53,8 @@ clean:
 	fi
 
 test: all
-	@chmod +x tests/test_xdp_ddos_blocker.sh
-	./tests/test_xdp_ddos_blocker.sh
+	@chmod +x $(TEST_SCRIPT)
+	./$(TEST_SCRIPT)
 
 
 
